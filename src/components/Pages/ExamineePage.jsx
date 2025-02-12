@@ -10,6 +10,7 @@ const ExamineePage = () => {
     const dispatch = useDispatch();
     const questions = useSelector((state) => state.questions.questions);
     const [answers, setAnswers] = useState({}); // Store selected answers
+    const navigate = useNavigate();
   
     const handleChange = (e) => {
       const { name, value } = e.target;
