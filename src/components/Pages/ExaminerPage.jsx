@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "../../redux/authslice";
 
 const ExaminerPage = () => {
-const dispatch =useDispatch();
+const dispatch =useDispatch(); //For Redux
 const questions = useSelector((state)=> state.questions.questions);
 const [data, setData] = useState({ question: '', options: ['', '', '', ''], correctAnswer: '' });
 const[editIndex, setEditIndex] = useState(null);
@@ -37,9 +37,6 @@ const handleSubmit = (e) => {
     options: data.options,
     correctAnswer: data.correctAnswer,
   };
-
-
-
 
   if (editIndex !== null) {
     dispatch(updateQuestion({ index: editIndex, newQuestion }));
@@ -136,126 +133,5 @@ return (
   </div>
 );
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // //Use in react router
-  // const dispatch = useDispatch();
-  // //For Redux using the state of question with the name question
-  // const questions = useSelector((state) => state.questions.questions);
-  // const { register, handleSubmit, setValue, reset } = useForm();
-  // const navigate = useNavigate();
-  // const [editIndex, setEditIndex] = useState(null);
-  // const { isAuthenticated, user } = useSelector((state) => state.auth);
-  // useEffect(() => {
-  //   if (!isAuthenticated) {
-  //     dispatch(logout());
-  //     navigate("/");
-  //   }
-  // });
-  // const onSubmit = (data) => {
-  //   if (editIndex !== null) {
-  //     dispatch(
-  //       updateQuestion({
-  //         index: editIndex,
-  //         newQuestion: { question: data.question, answer: data.answer },
-  //       })
-  //     );
-  //     setEditIndex(null);
-  //   } else {
-  //     dispatch(addQuestion({ question: data.question, answer: data.answer }));
-  //   }
-  //   reset();
-  // };
-
-  // const handleEdit = (index) => {
-  //   const questionToEdit = questions[index];
-  //   setValue("question", questionToEdit.question);
-  //   setValue("answer", questionToEdit.answer);
-  //   setEditIndex(index);
-  // };
-
-
-
-  // const handleLogout = () => {
-  //   dispatch(logout());
-  //   navigate("/");
-  // };
-  // console.log("Questions in ExaminerPage:", questions);
-
-  // return (
-  //   <div className="flex flex-col items-center justify-center min-h-screen bg-theme-lightest p-8">
-  //     {isAuthenticated && (
-  //       <div className="w-full flex justify-between items-center p-4 bg-theme-dark text-white fixed top-0 left-0">
-  //         <span className="text-lg">Welcome, {user.username}</span>
-  //         <button
-  //           onClick={handleLogout}
-  //           className="bg-theme-light text-theme-dark py-2 px-4 rounded"
-  //         >
-  //           Logout
-  //         </button>
-  //       </div>
-  //     )}
-  //     <h1 className="text-2xl font-bold mb-4 text-theme-dark">Examiner Page</h1>
-  //     <form onSubmit={handleSubmit(onSubmit)} className="mb-4">
-  //       <input
-  //         type="text"
-  //         placeholder="Question"
-  //         {...register("question", { required: true })}
-  //         className="border p-2 mr-2"
-  //       />
-  //       <input
-  //         type="text"
-  //         placeholder="Answer"
-  //         {...register("answer", { required: true })}
-  //         className="border p-2"
-  //       />
-  //       <button
-  //         type="submit"
-  //         className="bg-theme-base text-white py-2 px-4 ml-2"
-  //       >
-  //         {editIndex !== null ? "Update" : "Add"}
-  //       </button>
-  //     </form>
-  //     <div className="w-full max-w-md">
-  //       {questions.map((q, index) => (
-  //         <div key={index} className="mb-2 flex text-theme-dark items-center">
-  //           <div className="flex-grow">
-  //             <span>{q.question}</span>
-  //           </div>
-  //           <div className="flex-shrink-0">
-  //             <button
-  //               onClick={() => handleEdit(index)}
-  //               className="bg-yellow-500 text-white py-1 px-2 ml-2"
-  //             >
-  //               Edit
-  //             </button>
-  //             <button
-  //               onClick={() => dispatch(deleteQuestion(index))}
-  //               className="bg-red-500 text-white py-1 px-2 ml-2"
-  //             >
-  //               Delete
-  //             </button>
-  //           </div>
-  //         </div>
-  //       ))}
-  //     </div>
-  //   </div>
-  // );
-  
-
 
 export default ExaminerPage;
