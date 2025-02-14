@@ -8,4 +8,6 @@ export const store = configureStore({
     questions: questionsReducer,
     auth: authReducer,
   },
+  //Reducer - reducer checks, action will be called, then modifies the store
+  //Dispatch - execute the action
 });

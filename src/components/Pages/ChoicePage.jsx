@@ -1,45 +1,55 @@
-import React, { useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../redux/authslice";
+import { useSelector } from "react-redux";
 import Logo from "../../assets/QuizzardMain.png";
+import { buttonMain, disableButton, mainTitle } from "../Styles/Styles.jsx";
 
 const ChoicePage = () => {
   const [disableButtn, setDisableButtn] = useState(true);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+
   const questions = useSelector((state) => state.questions.questions);
 
-
-  useEffect(() => {    
-    if (questions.length === 0) {
-      setDisableButtn(true);
-    } else setDisableButtn(false);
+  useEffect(() => {
+    questions.length === 0 ? setDisableButtn(true) : setDisableButtn(false);
   });
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-theme-lightest">
-    
-      <img src={Logo}></img>
-      <h1 className="text-5xl font-bold mb-5 text-theme-dark mt-4">Welcome to Quizzard</h1>
-      <p > Test your knowledge from the knowledge of professionals.</p>
-      <div>
-        <button
-          onClick={() => navigate("/adminlogin")}
-           className="bg-theme-dark text-white w-full py-2 px-4 rounded m-2"
-        >
-          Examiner
-        </button>
-        <br/>
-        <button
-          onClick={() => navigate("/examinee")}
-          className="bg-theme-dark text-white w-full py-2 px-4 rounded m-2 disabled:bg-gray-400"
-          disabled={disableButtn}
-        >
-          Examinee
-        </button>
+    <main>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-theme-purple">
+        <header>
+          <h1 className={mainTitle}>Welcome to Quizzard</h1>
+          <p className="  text-black m-3">
+            Test your knowledge from the knowledge of professionals.
+          </p>
+        </header>
+
+        <section>
+          <div className="flex justify-center items-center">
+            <img className="" src={Logo}></img>
+
+            <article>
+              <div>
+                <h1 className=" font-serif flex ">Are you a:</h1>
+                <button
+                  onClick={() => navigate("/adminlogin")}
+                  className={buttonMain}
+                >
+                  Examiner
+                </button>
+                <button
+                  onClick={() => navigate("/examinee")}
+                  className={disableButton}
+                  disabled={disableButtn}
+                >
+                  Examinee
+                </button>
+              </div>
+            </article>
+          </div>
+        </section>
       </div>
-    </div>
+    </main>
   );
 };
 

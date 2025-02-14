@@ -8,6 +8,7 @@ import {
 } from "../../redux/questionslice";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../redux/authslice";
+import { buttonMain } from "../Styles/Styles";
 
 const ExaminerPage = () => {
 const dispatch =useDispatch(); //For Redux
@@ -38,6 +39,7 @@ const handleSubmit = (e) => {
     correctAnswer: data.correctAnswer,
   };
 
+
   if (editIndex !== null) {
     dispatch(updateQuestion({ index: editIndex, newQuestion }));
     setEditIndex(null);
@@ -64,26 +66,33 @@ const handleDelete = (index) => {
   };
 
 return (
-  <div className="flex flex-col items-center justify-center min-h-screen bg-theme-lightest p-8">
+  
+  <div className="flex items-center justify-center min-h-screen bg-theme-blue p-8">
+    
       {isAuthenticated && (
-        <div className="w-full flex justify-between items-center p-4 bg-theme-dark text-white fixed top-0 left-0">
-          <span className="text-lg">Welcome, {user.username}</span>
+        <div className="w-full flex justify-between items-center p-4 bg-theme-purple text-white fixed top-0 left-0">
+          <span className="text-lg">Welcome, <strong> {user.username}</strong></span>
           <button
             onClick={handleLogout}
-            className="bg-theme-light text-theme-dark py-2 px-4 rounded"
+            className="bg-theme-blue text-theme-dark py-2 px-4 rounded"
           >
             Logout
           </button>
         </div>
       )}
-  <div className="flex flex-col items-center min-h-screen bg-theme-lightest mb-10 p-8">
-    <form onSubmit={handleSubmit} className="bg-theme-base mb-5 py-2 px-4 ml-2">
+      
+  <div className="min-h-screen p-10">
+  <div>
+          <h1 className="text-3xl py-5 font-serif text-theme-white font-bold">Create/Update Questions</h1>
+        </div>
+    <form onSubmit={handleSubmit}>
       <input 
-        type="text"
+        type="longtext"
         name="question"
         value={data.question}
         onChange={handleChange}
         placeholder="Question Here"
+        className="border rounded p-2 w-full "
         required
       />
       {data.options.map((option, index) => (
@@ -93,14 +102,17 @@ return (
           name={`option-${index}`}
           value={option}
           onChange={handleChange}
-          placeholder={`Option ${index + 1}`}
+          placeholder={`Choice ${index + 1}`}
+          className="border p-2 "
           required
+         
         />
       ))}
       <select 
         name="correctAnswer"
         value={data.correctAnswer}
         onChange={handleChange}
+        className="border p-2 w-50 items-end"
         required
       >
         <option value="" disabled>Select Correct Answer</option>
@@ -108,27 +120,32 @@ return (
           <option key={index} value={option}>{option}</option>
         ))}
       </select>
-      <button type="submit">{editIndex !== null ? 'Update' : 'Add'} Question</button>
+      <button type="submit" className=''>{editIndex !== null ? 'Update' : 'Add'} Question</button>
     </form>
-
+        <div>
+          <h1 className="text-3xl my-5 font-serif text-white font-bold">Stored Questions</h1>
+        </div>
     <ul>
       {questions.map((q, index) => (
-        <li key={index}>
+        <li key={index}
+        className="bg-white p-5 rounded shadow-lg">
           <strong>{q.question}</strong>
           <ul>
             {q.options.map((option, idx) => (
               <li key={idx}>{option} {option === q.correctAnswer ? '(Correct)' : ''}</li>
             ))}
           </ul>
-          <button onClick={() => handleEdit(index)}>Edit</button>
-          <button onClick={() => handleDelete(index)}>Delete</button>
+          <button className="bg-theme-ochre text-black  text-lg  p-3  py-2 rounded m-2" onClick={() => handleEdit(index)}>Edit</button>
+          <button className="bg-theme-orange text-black  text-lg  p-3  py-2 rounded m-2"onClick={() => handleDelete(index)}>Delete</button>  
         </li>
       ))}
     </ul>
+
     <div>
-  <button
+          <button
+          className={buttonMain}
           onClick={() => navigate("/")}>Go Back to Menu</button>
-          </div>
+    </div>
   </div>
   </div>
 );
